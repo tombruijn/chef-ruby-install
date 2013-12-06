@@ -12,6 +12,7 @@ rubies.each do |config|
     update_path config["update_path"]
     user config["user"]
     group config["group"]
+    gems config["gems"]
 
     # if config["reinstall"]
     #   # TODO: Not supported yet

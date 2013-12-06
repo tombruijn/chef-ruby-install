@@ -24,6 +24,19 @@ action :install do
     not_if { ::File.exists?(ruby_path) }
   end.run_action(:run)
 
+  if new_resource.gems
+    new_resource.gems.each do |gem_config|
+      gem_options = []
+      gem_config.select{|k,v| k != "name" }.each do |key, value|
+        gem_options << "--#{key} #{value}"
+      end
+
+      execute "gem install #{gem_config["name"]}" do
+        command "gem install #{gem_config["name"]} #{gem_options.join(" ")}"
+      end
+    end
+  end
+
   if new_resource.user && new_resource.group
     home_dir = "/home/#{new_resource.user}"
 

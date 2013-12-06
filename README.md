@@ -45,10 +45,11 @@ See also example below.
   - `update_path` - Boolean - Default: `false`  
     Set to true to set the Ruby version to path.
     Requires the `user` attribute to be set.
-  - `gems` - Array - Default: `[]` - __Not supported yet__  
+  - `gems` - Array - Default: `[]`  
     Each array element is a Hash with the following attributes:
     - `name` - Name of the gem to install.
     - `version` - Version of the gem to install.
+    - And any other gem install options. Use their `--` variant.
 
 Example:
 
@@ -65,7 +66,7 @@ Example:
         user: "vagrant",
         update_path: true,
         gems: [
-          { name: "bundler" }
+          { name: "bundler", version: "1.3.5" }
         ]
       }
     ]
