@@ -10,8 +10,7 @@ rubies.each do |config|
     ruby_version ruby["version"]
     rubies_path attributes["rubies_path"]
     update_path true
-    user "vagrant"
-    group "vagrant"
+    user config["user"]
     default true
 
     # if config["reinstall"]

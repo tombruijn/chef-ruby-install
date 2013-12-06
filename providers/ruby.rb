@@ -18,47 +18,47 @@ action :install do
         #{install_options.join(" ")} > #{output_file}
     EOH
     user new_resource.user if new_resource.user
-    group new_resource.group if new_resource.group
     environment new_resource.environment if new_resource.environment
 
     action :nothing
     not_if { ::File.exists?(ruby_path) }
   end.run_action(:run)
 
-  matches = `grep "Successfully installed" #{output_file}`
-    .match(/Successfully installed [^into]+ into (.*)/)
-  install_location = matches ? matches[1] : ruby_path
+  if new_resource.user
+    home_dir = "/home/#{new_resource.user}"
 
-  if new_resource.update_path
-    # TODO: Add support for zsh
-    profile_file = "$HOME/.bashrc"
-    source_command = "source $HOME/.ruby_path"
+    if new_resource.update_path
+      # TODO: Add support for zsh
+      profile_file = "#{home_dir}/.bashrc"
+      source_command = "source #{home_dir}/.ruby_path"
 
-    execute "Add Ruby path config" do
-      command <<-EOH
-        echo >> #{profile_file};
-        echo >> #{profile_file};
-        echo #{source_command} >> #{profile_file};
-      EOH
-      user new_resource.user if new_resource.user
-      group new_resource.group if new_resource.group
+      # Add path file to bash file
+      execute "Add Ruby path config" do
+        command <<-EOH
+          echo >> #{profile_file};
+          echo >> #{profile_file};
+          echo #{source_command} >> #{profile_file};
+        EOH
+        user new_resource.user
 
-      action :run
-      only_if { `grep "#{source_command}" #{profile_file}` == "" }
+        action :run
+        only_if { `grep "#{source_command}" #{profile_file}` == "" }
+      end
+
+      # Write to path file
+      matches = `grep "Successfully installed" #{output_file}`
+        .match(/Successfully installed [^into]+ into (.*)/)
+      install_location = matches ? matches[1] : ruby_path
+
+      file "#{home_dir}/.ruby_path" do
+        content "export PATH=#{install_location}/bin:$PATH"
+
+        user new_resource.user
+      end
     end
-  end
-
-  if new_resource.default
-    default_ruby_path = "export PATH=#{install_location}/bin:$PATH"
-    ruby_path_file = "$HOME/.ruby_path"
-    execute "Update Ruby path" do
-      command "echo '#{default_ruby_path}' > #{ruby_path_file}"
-
-      user new_resource.user if new_resource.user
-      group new_resource.group if new_resource.group
-
-      not_if { `cat #{ruby_path_file}`.strip == default_ruby_path }
-    end
+  else
+    Chef::Log.warn "Did not specify user for which to update Ruby path. "\
+      "Skipping..."
   end
 end
 
