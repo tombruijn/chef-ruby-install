@@ -9,7 +9,7 @@ rubies.each do |config|
     ruby_implementation ruby["implementation"]
     ruby_version ruby["version"]
     rubies_path attributes["rubies_path"]
-    update_path true
+    update_path config["update_path"]
     user config["user"]
     default true
 
