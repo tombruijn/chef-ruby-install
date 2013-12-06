@@ -11,20 +11,20 @@ action :install do
     ruby_path = ::File.join("opt", "rubies", ruby_string)
   end
 
-  output_file = "/var/chef/cache/ruby-install-results-#{ruby_string}.log"
   execute "ruby-install[#{ruby_string}]" do
     command <<-EOH
       /usr/local/bin/ruby-install #{ruby_implementation} #{ruby_version} \
-        #{install_options.join(" ")} > #{output_file}
+        #{install_options.join(" ")}
     EOH
     user new_resource.user if new_resource.user
+    group new_resource.group if new_resource.group
     environment new_resource.environment if new_resource.environment
 
     action :nothing
     not_if { ::File.exists?(ruby_path) }
   end.run_action(:run)
 
-  if new_resource.user
+  if new_resource.user && new_resource.group
     home_dir = "/home/#{new_resource.user}"
 
     if new_resource.update_path
@@ -40,20 +40,18 @@ action :install do
           echo #{source_command} >> #{profile_file};
         EOH
         user new_resource.user
+        group new_resource.group
 
         action :run
         only_if { `grep "#{source_command}" #{profile_file}` == "" }
       end
 
       # Write to path file
-      matches = `grep "Successfully installed" #{output_file}`
-        .match(/Successfully installed [^into]+ into (.*)/)
-      install_location = matches ? matches[1] : ruby_path
-
       file "#{home_dir}/.ruby_path" do
-        content "export PATH=#{install_location}/bin:$PATH"
+        content "export PATH=#{ruby_path}/bin:$PATH"
 
         user new_resource.user
+        group new_resource.group
       end
     end
   else
