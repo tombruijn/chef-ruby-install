@@ -11,7 +11,7 @@ rubies.each do |config|
     rubies_path attributes["rubies_path"]
     update_path config["update_path"]
     user config["user"]
-    default true
+    group config["group"]
 
     # if config["reinstall"]
     #   # TODO: Not supported yet

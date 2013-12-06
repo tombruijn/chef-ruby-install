@@ -1,3 +1,5 @@
+include_recipe "git"
+
 attributes = node["ruby-install"]
 git_url = attributes["git_url"]
 git_ref = attributes["git_ref"]
