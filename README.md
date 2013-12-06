@@ -42,6 +42,7 @@ See also example below.
     - `version` - String - The Ruby version you want to install.  
       Example: `2.0.0-p353`
   - `user` - String - User for which to install the Ruby version.
+  - `group` - String - Group for which to install the Ruby version.
   - `update_path` - Boolean - Default: `false`  
     Set to true to set the Ruby version to path.
     Requires the `user` attribute to be set.
@@ -64,6 +65,7 @@ Example:
       {
         ruby: { implementation: "ruby", version: "2.0.0-p247" },
         user: "vagrant",
+        group: "vagrant",
         update_path: true,
         gems: [
           { name: "bundler", version: "1.3.5" }
@@ -97,7 +99,24 @@ Installs the Ruby specified using ruby-install.
    Set to true to set the Ruby version to path.
    Requires the `user` attribute to be set.
 - `user` - String - User for which to install the Ruby version.
+- `group` - String - Group for which to install the Ruby version.
 - `environment` - Hash - environment variables to be set.
+
+### ruby_install_path
+
+This provider updates the path to the specified Ruby version.
+
+#### Actions
+
+##### Update
+
+Updates path to specified Ruby version.
+
+#### Attributes
+
+- `ruby_path` - String - Path to Ruby install.
+- `user` - String - User for which to update the path.
+- `group` - String - Group for which to update the path.
 
 ## License
 

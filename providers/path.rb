@@ -1,5 +1,4 @@
 action :update do
-  ruby_path = new_resource.path
   if new_resource.user && new_resource.group
     home_dir = "/home/#{new_resource.user}"
 
@@ -23,7 +22,7 @@ action :update do
 
     # Write to path file
     file "#{home_dir}/.ruby_path" do
-      content "export PATH=#{ruby_path}/bin:$PATH"
+      content "export PATH=#{new_resource.ruby_path}/bin:$PATH"
 
       user new_resource.user
       group new_resource.group
