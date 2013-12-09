@@ -39,11 +39,9 @@ See also example below.
   Currently: `/opt/rubies`
 - `rubies` - Array - Default: []  
   Each array element is a Hash with the following attributes:
-  - `ruby` - Hash
-    - `implementation` - String - Supported ruby-install implementations.  
-      These include: `ruby`, `jruby`, `rubinius`, `maglev`.
-    - `version` - String - The Ruby version you want to install.  
-      Example: `2.0.0-p353`
+  - `ruby` - String - ruby-install specific Ruby version selector.  
+     Examples: `ruby`, `ruby 2.0.0-p353` or `rubinius stable`.  
+     _Keywords such as stable are not supported by update_path._
   - `user` - String - User for which to install the Ruby version.
   - `group` - String - Group for which to install the Ruby version.
   - `reinstall` - Boolean - Default: false - Set to true to reinstall the ruby.
@@ -67,7 +65,7 @@ Example:
     rubies_path: "/home/vagrant/.rubies",
     rubies: [
       {
-        ruby: { implementation: "ruby", version: "2.0.0-p247" },
+        ruby: "ruby 2.0.0-p247",
         user: "vagrant",
         group: "vagrant",
         reinstall: true,
@@ -99,9 +97,9 @@ Tells ruby-install to reinstall the ruby.
 
 #### Attributes
 
-- `ruby_implementation` - String - Supported ruby-install implementations.  
-   These include: `ruby`, `jruby`, `rubinius`, `maglev`.
-- `ruby_version` - String - The Ruby version you want to install.
+- `ruby` - String - ruby-install specific Ruby version selector.  
+  Examples: `ruby`, `ruby 2.0.0-p353` or `rubinius 2.1.1`.  
+  _Keywords such as stable are not yet supported._
 - `rubies_path` - String - Path to install the rubies to.
   Defaults to: ruby-install's default. Currently: `/opt/rubies`
 - `update_path` - Boolean - Default: `false`  

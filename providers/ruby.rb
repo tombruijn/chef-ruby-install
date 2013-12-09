@@ -10,9 +10,7 @@ private
 
 def install_ruby(options = {})
   install_options = options.map { |k,v| "--#{k} #{v}" }
-  ruby_implementation = new_resource.ruby_implementation
-  ruby_version = new_resource.ruby_version
-  ruby_string = ruby_version_string(ruby_implementation, ruby_version)
+  ruby_string = new_resource.ruby.gsub(" ", "-")
 
   if new_resource.rubies_path
     ruby_path = ::File.join(new_resource.rubies_path, ruby_string)
@@ -21,9 +19,9 @@ def install_ruby(options = {})
     ruby_path = ::File.join("/opt", "rubies", ruby_string)
   end
 
-  execute "ruby-install[#{ruby_string}]" do
+  execute "ruby-install[#{new_resource.ruby}]" do
     command <<-EOH
-      /usr/local/bin/ruby-install #{ruby_implementation} #{ruby_version} \
+      /usr/local/bin/ruby-install #{new_resource.ruby} \
         #{install_options.join(" ")}
     EOH
     user new_resource.user if new_resource.user
@@ -52,8 +50,4 @@ def install_ruby(options = {})
       group new_resource.group if new_resource.group
     end
   end
-end
-
-def ruby_version_string(impl, version)
-  "#{impl}-#{version}"
 end
