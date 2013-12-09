@@ -8,7 +8,7 @@ action :install do
     ruby_path = ::File.join(new_resource.rubies_path, ruby_string)
     install_options << "--install-dir #{ruby_path}"
   else
-    ruby_path = ::File.join("opt", "rubies", ruby_string)
+    ruby_path = ::File.join("/opt", "rubies", ruby_string)
   end
 
   execute "ruby-install[#{ruby_string}]" do
