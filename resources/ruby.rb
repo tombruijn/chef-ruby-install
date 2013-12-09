@@ -1,4 +1,4 @@
-actions :install
+actions :install, :reinstall
 default_action :install
 
 attribute :ruby_implementation, kind_of: String, name_attribute: true

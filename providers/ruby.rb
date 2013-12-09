@@ -1,5 +1,15 @@
 action :install do
-  install_options = []
+  install_ruby "no-reinstall" => nil
+end
+
+action :reinstall do
+  install_ruby
+end
+
+private
+
+def install_ruby(options = {})
+  install_options = options.map { |k,v| "--#{k} #{v}" }
   ruby_implementation = new_resource.ruby_implementation
   ruby_version = new_resource.ruby_version
   ruby_string = ruby_version_string(ruby_implementation, ruby_version)
@@ -21,7 +31,6 @@ action :install do
     environment new_resource.environment if new_resource.environment
 
     action :nothing
-    not_if { ::File.exists?(ruby_path) }
   end.run_action(:run)
 
   if new_resource.gems
@@ -44,8 +53,6 @@ action :install do
     end
   end
 end
-
-private
 
 def ruby_version_string(impl, version)
   "#{impl}-#{version}"

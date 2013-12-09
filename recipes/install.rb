@@ -14,11 +14,10 @@ rubies.each do |config|
     group config["group"]
     gems config["gems"]
 
-    # if config["reinstall"]
-    #   # TODO: Not supported yet
-    #   action :reinstall
-    # else
-    #   action :install
-    # end
+    if config["reinstall"]
+      action :reinstall
+    else
+      action :install
+    end
   end
 end

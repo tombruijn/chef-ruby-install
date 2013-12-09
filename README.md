@@ -23,6 +23,9 @@ One or more can be specified using the attributes.
 The same can be accomplished by using the `ruby_install_ruby` provider
 (which this recipe uses).
 
+_Personally I recommend using the `ruby_install_ruby` and `ruby_install_path`
+resources to accomplish this._
+
 ## Attributes
 
 All attributes are scoped within the `ruby-build` node attribute.
@@ -43,6 +46,7 @@ See also example below.
       Example: `2.0.0-p353`
   - `user` - String - User for which to install the Ruby version.
   - `group` - String - Group for which to install the Ruby version.
+  - `reinstall` - Boolean - Default: false - Set to true to reinstall the ruby.
   - `update_path` - Boolean - Default: `false`  
     Set to true to set the Ruby version to path.
     Requires the `user` attribute to be set.
@@ -66,6 +70,7 @@ Example:
         ruby: { implementation: "ruby", version: "2.0.0-p247" },
         user: "vagrant",
         group: "vagrant",
+        reinstall: true,
         update_path: true,
         gems: [
           { name: "bundler", version: "1.3.5" }
@@ -87,6 +92,10 @@ This provider installs rubies using ruby-install.
 ##### Install
 
 Installs the Ruby specified using ruby-install.
+
+##### Reinstall
+
+Tells ruby-install to reinstall the ruby.
 
 #### Attributes
 
