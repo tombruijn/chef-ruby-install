@@ -6,8 +6,7 @@ rubies = attributes["rubies"]
 rubies.each do |config|
   ruby_install_ruby config["ruby"] do
     ruby config["ruby"]
-    rubies_path attributes["rubies_path"]
-    update_path config["update_path"]
+    install_dir config["install-dir"]
     user config["user"]
     group config["group"]
     gems config["gems"]

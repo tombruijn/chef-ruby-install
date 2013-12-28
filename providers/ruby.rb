@@ -1,3 +1,6 @@
+include RubyInstall::OptionsHelper
+include RubyInstall::UsersHelper
+
 action :install do
   install_ruby "no-reinstall" => nil
 end
@@ -8,21 +11,47 @@ end
 
 private
 
-def install_ruby(options = {})
-  install_options = options.map { |k,v| "--#{k} #{v}" }
-  ruby_string = new_resource.ruby.gsub(" ", "-")
+attr_writer :ruby_path
 
-  if new_resource.rubies_path
-    ruby_path = ::File.join(new_resource.rubies_path, ruby_string)
-    install_options << "--install-dir #{ruby_path}"
-  else
-    ruby_path = ::File.join("/opt", "rubies", ruby_string)
+def install_ruby(options = {})
+  # Register action options for ruby-install
+  options.each { |k,v| install_options[k] = v }
+
+  # Register ruby-install options
+  ruby_install_options = %w(install-dir src-dir patch mirror url md5 no-download
+    no-verify no-install-deps)
+  ruby_install_options.each do |option|
+    register_user_option(option)
   end
 
+  # Apply user install defaults
+  if new_resource.user
+    unless install_options["src-dir"]
+      # $HOME/rubies-src
+      install_options["src-dir"] = ::File.join(user_home_dir, "rubies-src")
+    end
+
+    unless install_options["install-dir"]
+      # $HOME/.rubies/{ruby_string}
+      self.ruby_path = ::File.join(user_home_dir, ".rubies", ruby_string)
+    end
+  end
+
+  # Apply system install defaults
+  if !install_options["install-dir"] && !ruby_path
+    # /opt/rubies/{ruby_string}
+    self.ruby_path = ::File.join("/opt", "rubies", ruby_string)
+  end
+
+  # Make sure install-dir is always set so we can reference it later
+  install_options["install-dir"] ||= ruby_path
+
+  # Install Ruby
+  stringified_install_options = stringify_install_options
   execute "ruby-install[#{new_resource.ruby}]" do
     command <<-EOH
       /usr/local/bin/ruby-install #{new_resource.ruby} \
-        #{install_options.join(" ")}
+        #{stringified_install_options}
     EOH
     user new_resource.user if new_resource.user
     group new_resource.group if new_resource.group
@@ -31,23 +60,16 @@ def install_ruby(options = {})
     action :nothing
   end.run_action(:run)
 
+  # Install gems
   if new_resource.gems
     new_resource.gems.each do |gem_config|
-      gem_options = []
-      gem_config.select{|k,v| k != "name" }.each do |key, value|
-        gem_options << "--#{key} #{value}"
-      end
+      gem_path = ::File.join(ruby_path, "bin/gem")
+      gem_config = gem_config.dup # So we can delete entries from hash
 
-      execute "gem install #{gem_config["name"]}" do
-        command "gem install #{gem_config["name"]} #{gem_options.join(" ")}"
+      gem_package gem_config.delete(:name) do
+        gem_binary gem_path
+        version gem_config.delete(:version)
       end
-    end
-  end
-
-  if new_resource.update_path
-    ruby_install_path ruby_path do
-      user new_resource.user if new_resource.user
-      group new_resource.group if new_resource.group
     end
   end
 end
