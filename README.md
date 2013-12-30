@@ -149,6 +149,17 @@ Exceptions:
   system install. `$RUBY` is the ruby string you specified with the spaces
   ` ` replaced with dashes `-`.
 
+## Development
+
+Issue reports and pull requests are appreciated on
+[GitHub](https://github.com/tombruijn/chef-ruby-install).
+
+### Releases
+
+New releases are released with the [emeril](https://github.com/fnichol/emeril)
+gem on the Opscode
+[Community site](http://community.opscode.com/cookbooks/ruby-install).
+
 ## License
 
 This cookbook is released under the MIT License.
