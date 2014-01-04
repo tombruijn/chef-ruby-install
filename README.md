@@ -46,7 +46,7 @@ See also example below.
   - `ruby` - String - Required - `ruby-install` specific Ruby version
     selector.  
     Examples: `ruby`, `ruby 2.0.0-p353` or `rubinius stable`.  
-    _Keywords such as stable are supported but not recommended. See
+    _Keywords such as `stable` are supported but not recommended. See
     `ruby_install_ruby` provider for more information._
   - `user` - String - Optional - User for which to install the Ruby version.  
     If used, make sure that the user is allowed to write in the default

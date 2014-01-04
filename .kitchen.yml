@@ -1,0 +1,35 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_solo
+
+platforms:
+  - name: ubuntu-12.04
+    driver_config:
+      require_chef_omnibus: true
+      customize:
+        memory: 512
+  - name: centos-6.4
+    driver_config:
+      require_chef_omnibus: true
+      customize:
+        memory: 512
+
+suites:
+  - name: default
+    run_list:
+      - recipe[ruby-install]
+    attributes:
+
+  - name: install
+    run_list:
+      - recipe[ruby-install::install]
+    attributes:
+      ruby-install:
+        rubies:
+          - ruby: "ruby 2.0.0-p353"
+            gems:
+              - name: "bundler"
+                version: "1.5.1"
