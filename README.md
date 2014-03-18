@@ -25,9 +25,9 @@ One or more can be specified using the attributes.
 The same can be accomplished by using the `ruby_install_ruby` provider
 (which this recipe uses).
 
-_The `ruby_install_ruby` provider accepts more
+*The `ruby_install_ruby` provider accepts more
 configurable options than the recipe does, so if you need any of them;
-use the provider. More information in the providers section._
+use the provider. More information in the providers section.*
 
 ## Attributes
 
@@ -40,14 +40,14 @@ See also example below.
 - `install_path` - String - Optional -
   Defaults to: `/var/chef/cache/ruby-install`  
   Path to install `ruby-install` in.  
-  (_Default value uses the `file_cache_path` attribute from Chef's config._)
+  (*Default value uses the `file_cache_path` attribute from Chef's config.*)
 - `rubies` - Array - Default: []  
   Each array element is a Hash with the following attributes:
   - `ruby` - String - Required - `ruby-install` specific Ruby version
     selector.  
     Examples: `ruby`, `ruby 2.0.0-p353` or `rubinius stable`.  
-    _Keywords such as `stable` are supported but not recommended. See
-    `ruby_install_ruby` provider for more information._
+    *Keywords such as `stable` are supported but not recommended. See
+    `ruby_install_ruby` provider for more information.*
   - `user` - String - Optional - User for which to install the Ruby version.  
     If used, make sure that the user is allowed to write in the default
     directories, if you use them, and if the user is allowed to allow
@@ -104,8 +104,8 @@ Tells ruby-install to reinstall the ruby.
 
 - `ruby` - String - ruby-install specific Ruby version selector.  
   Examples: `ruby`, `ruby 2.0.0-p353` or `rubinius 2.1.1`.  
-  _Keywords such as stable are not recommended as their actual version change
-  with each release._
+  *Keywords such as stable are not recommended as their actual version change
+  with each release.*
 - `gems` - Array - List of gems to install.  
   Each array element is a hash that specify which gems to install.
   See the `ruby-install::install` recipe for the format of each hash.
