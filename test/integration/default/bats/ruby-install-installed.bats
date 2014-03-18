@@ -5,5 +5,5 @@
 
 @test "ruby-install version" {
   run ruby-install --version
-  [ "$output" = "ruby-install: 0.3.4" ]
+  [ "$output" = "ruby-install: 0.4.1" ]
 }
