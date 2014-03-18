@@ -141,7 +141,7 @@ See the exceptions heading under the list.
 
 Exceptions:
 
-- `src-dir` is set the the users home dir `$HOME/rubies-src` if `user` is
+- `src_dir` is set the the users home dir `$HOME/rubies-src` if `user` is
   specified.
 - `install_dir` is always set so that the provider can call it to install
   gems and update the path if specified. It will default to
