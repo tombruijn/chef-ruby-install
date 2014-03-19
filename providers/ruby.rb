@@ -31,18 +31,16 @@ def install_ruby(options = {})
 
     unless install_options["install-dir"]
       # $HOME/.rubies/{ruby_string}
-      self.ruby_path = ::File.join(user_home_dir, ".rubies", ruby_string)
+      install_options["install-dir"] =
+        ::File.join(user_home_dir, ".rubies", ruby_string)
     end
   end
 
   # Apply system install defaults
-  if !install_options["install-dir"] && !ruby_path
+  unless install_options["install-dir"]
     # /opt/rubies/{ruby_string}
-    self.ruby_path = ::File.join("/opt", "rubies", ruby_string)
+    install_options["install-dir"] = ::File.join("/opt", "rubies", ruby_string)
   end
-
-  # Make sure install-dir is always set so we can reference it later
-  install_options["install-dir"] ||= ruby_path
 
   # Install Ruby
   stringified_install_options = stringify_install_options
@@ -61,7 +59,7 @@ def install_ruby(options = {})
   # Install gems
   if new_resource.gems
     new_resource.gems.each do |gem_config|
-      gem_path = ::File.join(ruby_path, "bin/gem")
+      gem_path = ::File.join(install_options["install-dir"], "bin/gem")
       gem_config = gem_config.dup # So we can delete entries from hash
 
       gem_package gem_config.delete(:name) do

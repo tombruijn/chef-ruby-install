@@ -1,7 +1,6 @@
 module RubyInstall
   module OptionsHelper
     attr_accessor :new_resource
-    attr_writer :ruby_path
 
     # Returns install options hash for Ruby installs.
     #
@@ -34,11 +33,6 @@ module RubyInstall
     # @return [String] path friendly name for the Ruby installation.
     def ruby_string
       new_resource.ruby.gsub(" ", "-")
-    end
-
-    # @return [String] path of the Ruby installation.
-    def ruby_path
-      @ruby_path || install_options["install-dir"]
     end
   end
 end

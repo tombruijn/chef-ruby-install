@@ -117,39 +117,4 @@ describe RubyInstall::OptionsHelper do
       expect(subject).to eq("ruby-2.1.1")
     end
   end
-
-  describe ".ruby_path" do
-    subject { provider.ruby_path }
-
-    context "with set ruby_path" do
-      let :resource do
-        r = Struct.new(:install_dir)
-        r.new("different path")
-      end
-      before do
-        provider.new_resource = resource
-        provider.register_user_option("install-dir")
-        provider.ruby_path = "my_path"
-      end
-
-      it "should return set ruby_path" do
-        expect(subject).to eq("my_path")
-      end
-    end
-
-    context "without set ruby_path" do
-      let :resource do
-        r = Struct.new(:install_dir)
-        r.new("different path")
-      end
-      before do
-        provider.new_resource = resource
-        provider.register_user_option("install-dir")
-      end
-
-      it "should fall back on installation options" do
-        expect(subject).to eq("different path")
-      end
-    end
-  end
 end
