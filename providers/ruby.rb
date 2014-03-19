@@ -11,8 +11,6 @@ end
 
 private
 
-attr_writer :ruby_path
-
 def install_ruby(options = {})
   # Register action options for ruby-install
   options.each { |k,v| install_options[k] = v }

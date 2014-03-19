@@ -1,5 +1,8 @@
 module RubyInstall
   module OptionsHelper
+    attr_accessor :new_resource
+    attr_writer :ruby_path
+
     # Returns install options hash for Ruby installs.
     #
     # @return [Hash] install options.
@@ -12,8 +15,10 @@ module RubyInstall
     # @param options [String] option name.
     def register_user_option(option)
       option_name = option.gsub("-", "_")
-      value = new_resource.send(option_name)
-      install_options[option] = value if value
+      if new_resource.respond_to?(option_name)
+        value = new_resource.send(option_name)
+        install_options[option] = value if value
+      end
     end
 
     # @return [String] string of all configured ruby-install options.
