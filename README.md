@@ -130,13 +130,13 @@ See the exceptions heading under the list.
   Alternate URL to download the Ruby archive from.
 - `md5` - String - Optional  
   MD5 checksum of the Ruby archive.
-- `no-download` - Boolean - Optional - Default `false`  
+- `no_download` - Boolean - Optional - Default `false`  
   Use the previously downloaded Ruby archive
-- `no-verify` - Boolean - Optional - Default `false`  
+- `no_verify` - Boolean - Optional - Default `false`  
   Do not verify the downloaded Ruby archive
-- `no-install-deps` - Boolean - Optional - Default `false`  
+- `no_install_deps` - Boolean - Optional - Default `false`  
   Do not install build dependencies before installing Ruby
-- `no-reinstall` - Boolean - Optional - Default `false`  
+- `no_reinstall` - Boolean - Optional - Default `false`  
   Skip installation if another Ruby is detected in same location.
 
 Exceptions:
