@@ -36,7 +36,7 @@ See also example below.
 
 - `git_url` - String - Optional -
   Default: `https://github.com/postmodern/ruby-install.git`
-- `git_ref` - String - Optional - Default: `v0.3.4`
+- `git_ref` - String - Optional - Default: `v0.4.3`
 - `install_path` - String - Optional -
   Defaults to: `/var/chef/cache/ruby-install`  
   Path to install `ruby-install` in.  
@@ -67,11 +67,11 @@ Example:
 {
   "ruby-install" => {
     git_url: "https://github.com/postmodern/ruby-install.git",
-    git_ref: "v0.3.4",
+    git_ref: "v0.4.3",
     install_path: "/home/vagrant/ruby-install",
     rubies: [
       {
-        ruby: "ruby 2.0.0-353",
+        ruby: "ruby 2.0.0-p451",
         user: "vagrant",
         group: "vagrant",
         reinstall: true,
