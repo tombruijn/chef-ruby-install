@@ -6,6 +6,11 @@ provisioner:
   name: chef_solo
 
 platforms:
+  - name: ubuntu-14.04
+    driver_config:
+      require_chef_omnibus: true
+      customize:
+        memory: 512
   - name: ubuntu-12.04
     driver_config:
       require_chef_omnibus: true
@@ -29,7 +34,8 @@ suites:
     attributes:
       ruby-install:
         rubies:
-          - ruby: "ruby 2.0.0-p353"
+          - ruby: "ruby 2.2.2"
+            sha512: "d6693251296e9c6e8452786ce6b0447c8730aff7f92d0a92733444dbf298a1e7504b7bd29bb6ee4f2155ef94ccb63148311c3ed7ac3403b60120a3ab5c70a162"
             gems:
               - name: "bundler"
-                version: "1.5.1"
+                version: "1.9.4"
