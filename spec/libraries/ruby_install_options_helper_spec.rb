@@ -93,9 +93,9 @@ describe RubyInstall::OptionsHelper do
 
     context "multiple options" do
       before do
-        provider.stub_chain(:new_resource, "foo").and_return("bar")
-        provider.stub_chain(:new_resource, "baz").and_return(true)
-        provider.stub_chain(:new_resource, "bat").and_return(false)
+        allow(provider).to receive_message_chain(:new_resource, "foo" => "bar")
+        allow(provider).to receive_message_chain(:new_resource, "baz" => true)
+        allow(provider).to receive_message_chain(:new_resource, "bat" => false)
         provider.register_user_option("foo")
         provider.register_user_option("baz")
         provider.register_user_option("bat")
