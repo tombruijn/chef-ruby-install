@@ -10,6 +10,10 @@ rubies.each do |config|
     user config["user"]
     group config["group"]
     gems config["gems"]
+    md5 config["md5"]
+    sha1 config["sha1"]
+    sha256 config["sha256"]
+    sha512 config["sha512"]
 
     if config["reinstall"]
       action :reinstall

@@ -16,8 +16,8 @@ def install_ruby(options = {})
   options.each { |k,v| install_options[k] = v }
 
   # Register ruby-install options
-  ruby_install_options = %w(install-dir src-dir patch mirror url md5 no-download
-    no-verify no-install-deps)
+  ruby_install_options = %w(install-dir src-dir patch mirror url md5 sha1
+    sha256 sha512 no-download no-verify no-install-deps)
   ruby_install_options.each do |option|
     register_user_option(option)
   end

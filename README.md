@@ -55,6 +55,14 @@ See also example below.
   - `group` - String - Optional - Group for which to install the Ruby version.
   - `reinstall` - Boolean - Optional - Default: `false`  
     Set to `true` to reinstall the ruby.
+  - `md5` - String - Optional  
+     MD5 checksum of the Ruby archive.
+  - `sha1` - String - Optional  
+    SHA1 checksum of the Ruby archive.
+  - `sha256` - String - Optional  
+    SHA256 checksum of the Ruby archive.
+  - `sha512` - String - Optional  
+    SHA512 checksum of the Ruby archive.
   - `gems` - Array - Optional - Default: `[]`  
     Each array element is a Hash with the following attributes:
     - `name` - Required - Name of the gem to install.
@@ -130,6 +138,12 @@ See the exceptions heading under the list.
   Alternate URL to download the Ruby archive from.
 - `md5` - String - Optional  
   MD5 checksum of the Ruby archive.
+- `sha1` - String - Optional  
+  SHA1 checksum of the Ruby archive.
+- `sha256` - String - Optional  
+  SHA256 checksum of the Ruby archive.
+- `sha512` - String - Optional  
+  SHA512 checksum of the Ruby archive.
 - `no_download` - Boolean - Optional - Default `false`  
   Use the previously downloaded Ruby archive
 - `no_verify` - Boolean - Optional - Default `false`  
