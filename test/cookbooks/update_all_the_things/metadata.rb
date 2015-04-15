@@ -1,0 +1,7 @@
+name              "update_all_the_things"
+maintainer        "Tom de Bruijn"
+maintainer_email  "tom@tomdebruijn.com"
+license           "MIT"
+description       "Updates the server"
+long_description  "Updates the server"
+version           "0.0.1"

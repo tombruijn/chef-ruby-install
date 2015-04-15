@@ -30,6 +30,7 @@ suites:
 
   - name: install
     run_list:
+      - recipe[update_all_the_things]
       - recipe[ruby-install::install]
     attributes:
       ruby-install:
